@@ -8,7 +8,7 @@
 		"mcversion": "${minecraftVersion}",
 		"url": "",
 		"updateUrl": "",
-		"authorList": ["opencode"],
+		"authorList": ["atomic.potato"],
 		"credits": "",
 		"logoFile": "",
 		"screenshots": [],

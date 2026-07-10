@@ -1,0 +1,21 @@
+{
+	"modListVersion": 2,
+	"modList": [{
+		"modid": "${modId}",
+		"name": "${modName}",
+		"description": "Bridges HBM's Nuclear Tech Mod steam system with Electrical Age's mechanical power grid. Adds a hybrid steam turbine that accepts HBM steam via the HBM fluid network and outputs mechanical shaft power compatible with ELN.",
+		"version": "${modVersion}",
+		"mcversion": "${minecraftVersion}",
+		"url": "",
+		"updateUrl": "",
+		"authorList": ["opencode"],
+		"credits": "",
+		"logoFile": "",
+		"screenshots": [],
+		"parent": "",
+		"requiredMods": ["hbm", "eln"],
+		"dependencies": ["hbm", "eln"],
+		"dependants": [],
+		"useDependencyInformation": true
+	}]
+}

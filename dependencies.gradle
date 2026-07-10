@@ -1,0 +1,21 @@
+/*
+ * Dependencies:
+ * - HBM NTM: from NTM maven
+ * - ELN: preshadow for compilation (standard kotlin.reflect.KClass)
+ *       dev jar for runtime (place in run/client/mods/)
+ */
+dependencies {
+    // HBM Nuclear Tech Mod
+    def ntmBuildNumber = "5687"
+    implementation rfg.deobf("com.hbm:HBM-NTM:1.0.27_X${ntmBuildNumber}:dev")
+    compileOnly "com.hbm:HBM-NTM:1.0.27_X${ntmBuildNumber}:src"
+
+    // Electrical Age - preshadow jar (un-shadowed kotlin, but missing transitive deps).
+    // Override the location with -PelnJar=/path/to/eln-...-dev-preshadow.jar or an
+    // `elnJar` entry in your gradle.properties / ~/.gradle/gradle.properties.
+    def elnJar = project.findProperty("elnJar") ?: "/mnt/storage/projects/minecraft/ELNMODDING/ElectricalAge-AgeSeries/build/libs/eln-1.24.5-main+3dfa8192bb-dirty-dev-preshadow.jar"
+    implementation rfg.deobf(files(elnJar))
+    // Preshadow jar removed all shadowed deps; add them back explicitly:
+    implementation "org.semver4j:semver4j:4.3.0"
+    implementation "org.apache.commons:commons-math3:3.6.1"
+}

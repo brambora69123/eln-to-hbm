@@ -1,0 +1,8 @@
+// Additional repositories for dependencies
+
+repositories {
+    maven {
+        name = "NTM Releases"
+        url = "https://maven.ntmr.dev/releases"
+    }
+}

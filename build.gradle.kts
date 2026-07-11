@@ -24,15 +24,18 @@ dependencies {
 
 val shadowJar = tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     configurations = listOf(shade)
-    archiveClassifier.set("")
+    archiveClassifier.set("shadow")
     relocate("kotlin.", "mods.eln.shadow.kotlin.")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     exclude("META-INF/INDEX.LIST", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
 }
 
-// The default `jar` is replaced by the relocated shadow jar; reobf that instead.
-tasks.named("jar") { enabled = false }
-tasks.named("assemble").configure { dependsOn(shadowJar) }
-
-// RFG auto-creates `reobfShadowJar` from the shadowJar task above.
-tasks.named("build").configure { dependsOn("reobfShadowJar") }
+// Substitute the default `jar` content with the relocated shadow jar, so the normal
+// `reobfJar` pipeline (and the GTNH release workflow) ships the correct artifact.
+tasks.named<Jar>("jar") {
+    val mainOutput = sourceSets["main"].output
+    val roots = mainOutput.classesDirs.files.toMutableList().also { mainOutput.resourcesDir?.let(it::add) }
+    exclude { fe -> roots.any { fe.file == it || fe.file.startsWith(it) } }
+    from(zipTree(shadowJar.flatMap { it.archiveFile }))
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

@@ -13,7 +13,13 @@ import org.apache.logging.log4j.Logger
     version = Tags.VERSION,
     name = "HBM-ELN Bridge",
     acceptedMinecraftVersions = "[1.7.10]",
-    dependencies = "required-after:hbm;required-after:eln"
+    // NOTE: we intentionally do NOT declare `required-after:eln`. Forge 1.7.10's
+    // @Mod dependency parser lower-cases the mod id, so `required-after:Eln`
+    // becomes `required-after:eln` and can never match ELN's real id `Eln`,
+    // which would make the bridge fail to load. Instead we rely on FML's
+    // event phases (ELN is always fully initialized before our postInit runs)
+    // and a runtime presence guard in CommonProxy.postInit().
+    dependencies = "required-after:hbm"
 )
 class BridgeMod {
     companion object {

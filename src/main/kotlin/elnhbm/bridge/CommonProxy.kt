@@ -15,7 +15,28 @@ open class CommonProxy {
     open fun init(event: FMLInitializationEvent) {}
 
     open fun postInit(event: FMLPostInitializationEvent) {
+        if (!elnPresent()) {
+            BridgeMod.LOG.error(
+                "Electrical Age (ELN, mod id 'Eln') was not found. " +
+                    "HBM-ELN Bridge will not register the hybrid turbine."
+            )
+            return
+        }
         registerDescriptors()
+    }
+
+    /**
+     * ELN is referenced only at runtime (its classes live in ELN's jar on the shared
+     * mod classloader). We avoid declaring it via Forge's @Mod dependency (which
+     * lower-cases `Eln` to `eln` and can never match). Instead we probe for
+     * ELN's main class here, before any ELN type is touched, so a missing ELN
+     * degrades to a clear log line instead of a NoClassDefFoundError.
+     */
+    private fun elnPresent(): Boolean = try {
+        Class.forName("mods.eln.Eln")
+        true
+    } catch (_: Throwable) {
+        false
     }
 
     private fun registerDescriptors() {

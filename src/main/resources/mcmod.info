@@ -13,8 +13,8 @@
 		"logoFile": "",
 		"screenshots": [],
 		"parent": "",
-		"requiredMods": ["hbm", "eln"],
-		"dependencies": ["hbm", "eln"],
+		"requiredMods": ["hbm"],
+		"dependencies": ["hbm"],
 		"dependants": [],
 		"useDependencyInformation": true
 	}]

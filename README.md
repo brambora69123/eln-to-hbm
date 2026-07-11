@@ -64,7 +64,11 @@ This project uses the GTNH Forge (RetroFuturaGradle) buildscript.
 
 - **HBM** is pulled automatically from the NTM Maven (`https://maven.ntmr.dev/releases`).
 - **ELN** is consumed as a local **preshadow** jar (it uses standard `kotlin.reflect.KClass`, which is
-  required to compile against). Point the build at your ELN jar with a Gradle property:
+  required to compile against). A prebuilt jar is **vendored under `libs/`** (built from the ELN
+  `stable` branch, `1.24.5` / `3dfa8192`, with the `eln` mod-id rename), so a plain
+  `./gradlew build` works out of the box both locally and in CI.
+
+  To use your own ELN build instead, override the location with a Gradle property:
 
   ```bash
   ./gradlew build -PelnJar=/path/to/eln-<version>-dev-preshadow.jar
@@ -74,7 +78,7 @@ This project uses the GTNH Forge (RetroFuturaGradle) buildscript.
 
   The preshadow jar strips ELN's shadowed libraries, so this project re-adds them explicitly
   (`org.semver4j:semver4j`, `org.apache.commons:commons-math3`). At **runtime**, place a normal ELN
-  **dev** jar in your mods folder.
+  **dev** jar (from the ELN `stable` branch) in your mods folder.
 
 > Building/running currently expects Java for the GTNH toolchain (see `.java-version` /
 > `gradle-daemon-jvm.properties`).

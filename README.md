@@ -1,7 +1,7 @@
 # HBM-ELN Bridge
 
 A Minecraft **1.7.10** Forge mod that bridges [HBM's Nuclear Tech Mod](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT)
-steam system with [Electrical Age](https://github.com/Electrical-Age/ElectricalAge)'s mechanical
+steam system with [Electrical Age](https://github.com/age-series/ElectricalAge)'s mechanical
 power grid.
 
 It adds a **Hybrid Steam Turbine** that consumes HBM steam from the HBM fluid network and outputs
@@ -35,7 +35,7 @@ your cooling towers.
 
 - Minecraft 1.7.10 with Minecraft Forge
 - [HBM's Nuclear Tech Mod](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (`hbm`)
-- [Electrical Age](https://github.com/Electrical-Age/ElectricalAge) (`eln`)
+- [Electrical Age](https://github.com/age-series/ElectricalAge) (`eln`)
 
 Both are hard dependencies (`required-after:hbm;required-after:eln`).
 
@@ -46,11 +46,7 @@ Drop all three jars into your instance's `mods/` folder:
 1. **HBM's Nuclear Tech Mod** — download the matching build from
    [HbmMods/Hbm-s-Nuclear-Tech-GIT](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT)
    (the bridge is built against `HBM-NTM:1.0.27_X5687`).
-2. **Electrical Age** — use the **`eln`** build (lowercase mod id), required by this bridge.
-   Grab the prebuilt normal jar from the
-   [`v1.24.5-stable` release](https://github.com/brambora69123/ElectricalAge-ageseries/releases/tag/v1.24.5-stable)
-   of this fork (built from ELN `1.24.5` / `3dfa8192` with the rename). Do **not** use an
-   upstream `Eln` jar — the mod id must be `eln`.
+2. **Electrical Age** — use a stable release of [Electrical Age](https://github.com/age-series/ElectricalAge)
 3. **HBM-ELN Bridge** — download `elnhbmbridge-<version>.jar` from the
    [bridge releases](https://github.com/brambora69123/eln-to-hbm/releases).
 
@@ -82,8 +78,7 @@ This project uses the GTNH Forge (RetroFuturaGradle) buildscript.
 
 - **HBM** is pulled automatically from the NTM Maven (`https://maven.ntmr.dev/releases`).
 - **ELN** is consumed as a local **preshadow** jar (it uses standard `kotlin.reflect.KClass`, which is
-  required to compile against). A prebuilt jar is **vendored under `libs/`** (built from the ELN
-  `stable` branch, `1.24.5` / `3dfa8192`, with the `eln` mod-id rename), so a plain
+  required to compile against). A prebuilt jar is **vendored under `libs/`** (built from the latest ELN stable version), so a plain
   `./gradlew build` works out of the box both locally and in CI.
 
   To use your own ELN build instead, override the location with a Gradle property:

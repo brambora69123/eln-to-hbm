@@ -39,6 +39,24 @@ your cooling towers.
 
 Both are hard dependencies (`required-after:hbm;required-after:eln`).
 
+## Installation
+
+Drop all three jars into your instance's `mods/` folder:
+
+1. **HBM's Nuclear Tech Mod** — download the matching build from
+   [HbmMods/Hbm-s-Nuclear-Tech-GIT](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT)
+   (the bridge is built against `HBM-NTM:1.0.27_X5687`).
+2. **Electrical Age** — use the **`eln`** build (lowercase mod id), required by this bridge.
+   Grab the prebuilt normal jar from the
+   [`v1.24.5-stable` release](https://github.com/brambora69123/ElectricalAge-ageseries/releases/tag/v1.24.5-stable)
+   of this fork (built from ELN `1.24.5` / `3dfa8192` with the rename). Do **not** use an
+   upstream `Eln` jar — the mod id must be `eln`.
+3. **HBM-ELN Bridge** — download `elnhbmbridge-<version>.jar` from the
+   [bridge releases](https://github.com/brambora69123/eln-to-hbm/releases).
+
+> The preshadow ELN jar under `libs/` in this repo is only for **compiling** the bridge
+> (so local/CI builds work); end users only need the normal ELN jar above at runtime.
+
 ## Usage
 
 1. Craft/obtain the turbine (creative tab: ELN machines).

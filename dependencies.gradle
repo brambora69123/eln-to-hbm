@@ -14,9 +14,7 @@ dependencies {
     // The prebuilt jar is vendored under libs/ so local and CI builds work out of the box.
     // Override the location with -PelnJar=/path/to/eln-...-dev-preshadow.jar or an
     // `elnJar` entry in your gradle.properties / ~/.gradle/gradle.properties.
+    // Compile-only: ELN's own jar (with its shaded kotlin) is provided at runtime by the mod.
     def elnJar = project.findProperty("elnJar") ?: project.file("libs/eln-1.24.5-main+3dfa8192bb-dev-preshadow.jar").absolutePath
-    implementation rfg.deobf(files(elnJar))
-    // Preshadow jar removed all shadowed deps; add them back explicitly:
-    implementation "org.semver4j:semver4j:4.3.0"
-    implementation "org.apache.commons:commons-math3:3.6.1"
+    compileOnly rfg.deobf(files(elnJar))
 }

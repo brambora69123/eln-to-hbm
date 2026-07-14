@@ -22,7 +22,9 @@ class HybridTurbineRender(entity: TransparentNodeEntity, desc: TransparentNodeDe
     init {
         // Register our own turbine sound. ELN's `sound` field is `internal` and
         // cannot be overridden from this module, so we drive it here directly.
-        volumeSetting.target = 1f
+        // Start silent; ramp up only once the server reports the turbine is
+        // actually running (operational = true) via networkUnserialize.
+        volumeSetting.target = 0f
         volumeSetting.position = 0f
         soundLooper = TurbineSoundLooper("eln:steam_turbine", coordinate())
         addLoopedSound(soundLooper)

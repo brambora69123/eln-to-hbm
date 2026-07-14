@@ -178,14 +178,14 @@ class HybridTurbineElement(node: TransparentNode, desc: TransparentNodeDescripto
      * structure feed the turbine.
      */
     private fun connectFluids() {
-        val origin = node!!.coordinate
+        val origin = node?.coordinate ?: return
         val world = origin.world() ?: return
         val ox = origin.x
         val oy = origin.y
         val oz = origin.z
 
         val scan = mutableListOf(Triple(ox, oy, oz))
-        adesc.ghostGroup?.let { gg ->
+        adesc.getGhostGroupFront(front)?.let { gg ->
             for (e in gg.elementList) {
                 scan.add(Triple(ox + e.x, oy + e.y, oz + e.z))
             }

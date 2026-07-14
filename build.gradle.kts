@@ -39,3 +39,5 @@ tasks.named<Jar>("jar") {
     from(zipTree(shadowJar.flatMap { it.archiveFile }))
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+

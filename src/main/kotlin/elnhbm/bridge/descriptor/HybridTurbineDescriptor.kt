@@ -67,6 +67,9 @@ class HybridTurbineDescriptor(
                     for (z in -1..1) {
                         if (x == 0 && y == 0 && z == 0) continue
                         if (y == 0 && x != 0) continue
+                        // Skip shaft ghost port positions — GhostShaftNode.placeGhost()
+                        // (ELN 1.24.6+) creates ghost blocks at these coordinates itself.
+                        if (x == 0 && y == 1 && (z == -1 || z == 1)) continue
                         gg.addElement(x, y, z)
                     }
                 }

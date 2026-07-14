@@ -12,7 +12,8 @@ open class CommonProxy {
         BridgeConfig.load(event.suggestedConfigurationFile)
     }
 
-    open fun init(event: FMLInitializationEvent) {}
+    open fun init(event: FMLInitializationEvent) {
+    }
 
     open fun postInit(event: FMLPostInitializationEvent) {
         if (!elnPresent()) {

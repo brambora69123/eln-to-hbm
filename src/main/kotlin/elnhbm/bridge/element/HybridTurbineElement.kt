@@ -104,35 +104,31 @@ class HybridTurbineElement(node: TransparentNode, desc: TransparentNodeDescripto
             }
             outputTank.tankType = trait.coolsTo
 
-            // Steam is ALWAYS processed, exactly like HBM's industrial turbine:
-            // drain a fixed fraction of the (tier-scaled) input tank each tick,
-            // bounded by what's available and by room in the output tank. This is
-            // independent of shaft speed and throttle, so the boiler -> turbine ->
-            // cooling-tower loop keeps flowing no matter what.
+            // Steam is ALWAYS consumed as long as there is input available,
+            // regardless of output tank room.  Excess spent-steam that doesn't
+            // fit in the output tank is vented (lost).  This prevents the
+            // turbine from freezing when the output pipe network is slower than
+            // the input — critical for RBMK closed-loop safety.
             val inputOps = (Math.min(Math.ceil(inputTank.fill * adesc.consumptionPercent), inputTank.fill.toDouble()) / trait.amountReq).toInt()
-            val outputOps = (outputTank.maxFill - outputTank.fill) / trait.amountProduced
-            val ops = Math.min(inputOps, outputOps)
 
-            if (ops > 0) {
-                inputTank.fill -= ops * trait.amountReq
-                outputTank.fill += ops * trait.amountProduced
+            if (inputOps > 0) {
+                inputTank.fill -= inputOps * trait.amountReq
+                // Output goes into the tank if there is room; the rest is vented.
+                val room = outputTank.maxFill - outputTank.fill
+                val produced = inputOps * trait.amountProduced
+                outputTank.fill += Math.min(produced, room)
                 operational = true
 
-                // Only the conversion of recovered heat into SHAFT POWER is gated.
-                // The signal-cable throttle (0..1, wide open with no wire) and the
-                // speed governor decide how much heat becomes mechanical work; any
-                // excess heat is simply wasted, so cutting the throttle does not
-                // stop the spent-steam output.
                 val th = if (throttle.connectedComponents.isNotEmpty()) throttle.normalized else 1.0
                 val powerFactor = speedGovernor(shaft.rads) * th
                 efficiency = powerFactor.toFloat()
-                val heat = ops.toDouble() * trait.heatEnergy * coolEff
+                val heat = inputOps.toDouble() * trait.heatEnergy * coolEff
                 if (powerFactor > 0.0) shaft.energy += heat * BridgeConfig.heToJouleFactor * powerFactor
             } else {
                 efficiency = 0f
             }
 
-            stepRate((ops.toDouble() * trait.amountReq) / time, time)
+            stepRate((inputOps.toDouble() * trait.amountReq) / time, time)
         }
 
         private fun stepRate(ratePerSecond: Double, time: Double) {

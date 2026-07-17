@@ -1,0 +1,5 @@
+#<ELN_LANGFILE_V1_1>
+
+# Hybrid turbine display names (registered under ELN's transparentNodeItem)
+Hybrid_Steam_Turbine.name=Hybrid Steam Turbine
+Hybrid_Steam_Turbine_(Small).name=Hybrid Steam Turbine (Small)

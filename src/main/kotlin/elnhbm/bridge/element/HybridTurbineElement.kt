@@ -230,7 +230,7 @@ class HybridTurbineElement(node: TransparentNode, desc: TransparentNodeDescripto
 
     override fun getWaila(): Map<String, String> {
         val info = LinkedHashMap<String, String>()
-        info[tr("Mode")] = "${inputTank.tankType.getLocalizedName()} -> ${outputTank.tankType.getLocalizedName()}"
+        info[tr("Mode")] = "${inputTank.tankType.getConditionalName()} -> ${outputTank.tankType.getConditionalName()}"
         info[tr("Speed")] = Utils.plotRads("", shaft.rads)
         info[tr("Energy")] = Utils.plotEnergy("", shaft.energy)
         if (Eln.wailaEasyMode) {
